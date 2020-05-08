@@ -1,9 +1,11 @@
+languages = ['uzCyril', 'uzLatin'];
+
 let i18n = {
     uzCyril: require('./i18n/uz-cyril.json'),
     uzLatin: require('./i18n/uz-latin.json')
 };
 
-writtenNumber.defaults = {
+const writtenNumber = {
     lang: 'uzCyril'
 }
 
@@ -40,13 +42,27 @@ numberToScalesUz = (num) => {
     return cutNumber.reverse();
 }
 
-convertScalesToWordsUz = (numberArr) =>  {
+convertScalesToWordsUz = (numberArr, options) =>  {
+    options = options || {};
+    options = defaults(options, writtenNumber);
+
+    let language = typeof options.lang === 'string'
+        ? i18n[options.lang]
+        : options.lang;
+
+    if (!language) {
+        if (languages.indexOf(writtenNumber.lang) < 0) {
+            writtenNumber.lang = "en";
+        }
+        language = i18n[writtenNumber.lang];
+    }
+
     convertedResult = '';
     numberArr.forEach((element, index) => {
         const digit1 = parseInt(element[0]);
         const digit2 = parseInt(element[1]);
         const digit3 = parseInt(element[2]);
-        const unitName = textValues.units[index];
+        const unitName = language.units[index];
         let hundredUnitName = '';
         let digit1text = '';
         let digit2text = '';
@@ -54,12 +70,12 @@ convertScalesToWordsUz = (numberArr) =>  {
         if (digit1 === 0 && digit2 === 0 && digit3 === 0){
             return;
         }
-        digit1text = textValues.numberNames[0][digit1];
-        digit2text = textValues.numberNames[1][digit2];
+        digit1text = language.numberNames[0][digit1];
+        digit2text = language.numberNames[1][digit2];
         if (digit3 !== 0) {
-            hundredUnitName = textValues.numberNames[2][2];
+            hundredUnitName = language.numberNames[2][2];
         }
-        digit3text = textValues.numberNames[0][digit3];
+        digit3text = language.numberNames[0][digit3];
         
         const isunitName = index !== 0 && !(digit1 === 0 && digit2 === 0 && digit3 === 0);
         const scaleResult = `${digit3text} ${hundredUnitName} ${digit2text} ${digit1text} ${isunitName ? unitName : ''}`.replace(/\s+/g,' ').trim(); 
@@ -69,10 +85,23 @@ convertScalesToWordsUz = (numberArr) =>  {
     return convertedResult;
 }
 
+defaults = (target, defs) => {
+    if (target == null) target = {};
+    let ret = {};
+    let keys = Object.keys(defs);
+
+    for(let i = 0, len = keys.length; i < len; i++) {
+        let key = keys[i];
+        ret[key] = target[key] || defs[key];
+    }
+
+    return ret;
+}
+
 numberToWordsUz.convert = function(number, options = {}) {
     const numberArr = numberToScalesUz(number);
 
-    let convertedResult = convertScalesToWordsUz(numberArr);
+    let convertedResult = convertScalesToWordsUz(numberArr, options);
 
     return convertedResult.trim();
 }
