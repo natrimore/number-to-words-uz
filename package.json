@@ -1,0 +1,32 @@
+{
+  "name": "number-to-words-uz",
+  "version": "1.0.1",
+  "description": "Convert a number to words on uzbek language.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --hot",
+    "build": "webpack --mode production --colors --progress",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natrimore/number-to-words-uz.git"
+  },
+  "keywords": [
+    "convert"
+  ],
+  "author": "Jakhongir Murtazayev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/natrimore/number-to-words-uz/issues"
+  },
+  "homepage": "https://github.com/natrimore/number-to-words-uz#readme",
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  }
+}
