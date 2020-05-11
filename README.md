@@ -1,6 +1,8 @@
-# Convert number to Uzbek-lating and Uzbek-cyril
+# Convert number to Uzbek-latin and Uzbek-cyril
 
 ## Install
+
+Use the package manager [npm] to install:
 
 ```
 npm install number-to-words-uz
@@ -32,7 +34,7 @@ numberToWordsUz.convert(132); // default lang: uzCyril
 
 ## API
 
-`#### convert(number[, options])`
+#### `convert(number[, options])`
 
 Currently supported languages are:
 | Language | lang |
