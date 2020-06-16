@@ -1,9 +1,44 @@
 {
-    "minus": "минус",
-    "numberNames": [
-        ["", "bir", "ikki", "uch", "to'rt", "besh", "olti", "yetti", "sakkiz", "to'qqiz"],
-        ["", "o'n", "yigirma", "o'ttiz", "qirq", "ellik", "oltmish", "yetmish", "sakson", "to'qson"],
-        ["", "", "yuz"]
+  "minus": "minus",
+  "numberNames": [
+    [
+      "",
+      "bir",
+      "ikki",
+      "uch",
+      "to'rt",
+      "besh",
+      "olti",
+      "yetti",
+      "sakkiz",
+      "to'qqiz"
     ],
-    "units": ["", "ming", "million", "milliard", "trillion", "kvadrillion", "kvintillion", "sekstillion", "septillion", "oktillion", "nonillion", "detsillion"]
+    [
+      "",
+      "o'n",
+      "yigirma",
+      "o'ttiz",
+      "qirq",
+      "ellik",
+      "oltmish",
+      "yetmish",
+      "sakson",
+      "to'qson"
+    ],
+    ["", "", "yuz"]
+  ],
+  "units": [
+    "",
+    "ming",
+    "million",
+    "milliard",
+    "trillion",
+    "kvadrillion",
+    "kvintillion",
+    "sekstillion",
+    "septillion",
+    "oktillion",
+    "nonillion",
+    "detsillion"
+  ]
 }
