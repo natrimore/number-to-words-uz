@@ -30,6 +30,7 @@ numberToWordsUz.convert(132, { lang: "uzLatin" });
 
 ```javascript
 numberToWordsUz.convert(132); // default lang: uzCyril
+numberToWordsUz.convert(-132);
 ```
 
 ## API
