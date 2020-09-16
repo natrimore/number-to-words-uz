@@ -13,6 +13,8 @@ exports.i18n = i18n;
 
 let numberToWordsUz = {};
 
+let langId;
+
 numberToScalesUz = (num) => {
   let number = num.toString();
   let isMinusExists = false;
@@ -50,14 +52,14 @@ convertScalesToWordsUz = (numberArr, options) => {
   options = options || {};
   options = defaults(options, writtenNumber);
 
-  let language =
+  langId =
     typeof options.lang === "string" ? i18n[options.lang] : options.lang;
 
-  if (!language) {
-    if (languages.indexOf(writtenNumber.lang) < 0) {
+  if (!langId) {
+    if (langId.indexOf(writtenNumber.lang) < 0) {
       writtenNumber.lang = "uzCyril";
     }
-    language = i18n[writtenNumber.lang];
+    langId = i18n[writtenNumber.lang];
   }
 
   convertedResult = "";
@@ -70,7 +72,7 @@ convertScalesToWordsUz = (numberArr, options) => {
     const digit1 = parseInt(element[0]);
     const digit2 = parseInt(element[1]);
     const digit3 = parseInt(element[2]);
-    const unitName = language.units[index];
+    const unitName = langId.units[index];
     let hundredUnitName = "";
     let digit1text = "";
     let digit2text = "";
@@ -78,12 +80,12 @@ convertScalesToWordsUz = (numberArr, options) => {
     if (digit1 === 0 && digit2 === 0 && digit3 === 0) {
       return;
     }
-    digit1text = language.numberNames[0][digit1];
-    digit2text = language.numberNames[1][digit2];
+    digit1text = langId.numberNames[0][digit1];
+    digit2text = langId.numberNames[1][digit2];
     if (digit3 !== 0) {
-      hundredUnitName = language.numberNames[2][2];
+      hundredUnitName = langId.numberNames[2][2];
     }
-    digit3text = language.numberNames[0][digit3];
+    digit3text = langId.numberNames[0][digit3];
 
     const isunitName =
       index !== 0 && !(digit1 === 0 && digit2 === 0 && digit3 === 0);
@@ -95,7 +97,7 @@ convertScalesToWordsUz = (numberArr, options) => {
     convertedResult = `${scaleResult} ${convertedResult}`;
   });
   if (isMinus) {
-    convertedResult = `${language.minus} ${convertedResult}`;
+    convertedResult = `${langId.minus} ${convertedResult}`;
   }
   return convertedResult;
 };
@@ -114,11 +116,36 @@ defaults = (target, defs) => {
 };
 
 numberToWordsUz.convert = function (number, options = {}) {
-  const numberArr = numberToScalesUz(number);
+  number = number.toString();
 
-  let convertedResult = convertScalesToWordsUz(numberArr, options);
+  let beforedot = number;
+  
+  let afterdot = null;
+  
+  if (number.indexOf(".") !== -1) {
+    [beforedot, afterdot] = number.split('.');
+  }
+  else if (number.indexOf(",") !== -1) {
+    [beforedot, afterdot] = number.split(',');
+  }
 
-  return convertedResult.trim();
+  let convertedResult;
+  
+  const beforedots = numberToScalesUz(beforedot)   
+  
+  let beforedotConvert = convertScalesToWordsUz(beforedots, options);
+
+  convertedResult = beforedotConvert.trim();
+
+  if (afterdot !== null) {
+    const afterdots = numberToScalesUz(afterdot);
+
+    let afterdotConvert = convertScalesToWordsUz(afterdots, options);
+
+    convertedResult = `${convertedResult} ${langId.point} ${afterdotConvert.trim()}`;
+  }
+  
+  return convertedResult;
 };
 
 module.exports = numberToWordsUz;
